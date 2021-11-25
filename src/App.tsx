@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Form, Button, Input, Divider } from "antd";
+import DynamicField from "./DynamicField";
+import "./index.css";
+import "antd/dist/antd.css";
 
-function App() {
+const defaultFormItemLayout = {
+  labelCol: {
+    xs: { span: 6 },
+  },
+  wrapperCol: {
+    xs: { span: 12 },
+  },
+};
+
+export default function App() {
+  const [form] = Form.useForm();
+
+  function handleFinish(values: any) {
+    console.log("VALUES", values);
+    alert("Check console for values");
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <h1>AntD Dynamic Form Example</h1>
+      <Form form={form} {...defaultFormItemLayout} onFinish={handleFinish}>
+        <Form.Item
+          name="first"
+          label="Persistent Field"
+          rules={[{ required: true }]}
         >
-          Learn React
-        </a>
-      </header>
+          <Input />
+        </Form.Item>
+        <Divider dashed>Additional Fields</Divider>
+        <DynamicField />
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 }
-
-export default App;
